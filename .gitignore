@@ -1,0 +1,23 @@
+node_modules/
+*.log
+auth.log
+
+# NEVER PUBLISH SECRETS
+.secret
+*.secret
+.env
+*.env
+config.json
+.goostr-keys.json
+.dust.json
+
+# Backup files (shit-saves stay on server, not in public repo)
+*.bak
+*.backup
+[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-*.js
+*.working
+*.wip
+*-wip
+*-backup
+*-branch
+versions/

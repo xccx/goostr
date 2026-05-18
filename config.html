@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head><title>config</title>
+<style>
+body{background:#1a1a1a;color:#c0c0c0;font-family:monospace;font-size:16px;margin:20px}
+.toggle{margin:8px 0;cursor:pointer;user-select:none}
+.on{color:#fff}
+.off{color:#666}
+a{color:#666}
+</style>
+</head>
+<body>
+<div id="cfg"></div>
+<p><a href="/">back</a></p>
+<script>
+const descs = {
+  stomp_display: "show all stomp entries",
+  ots_stamp: "opentimestamps on new posts",
+  brb: "hide the log",
+  goostr_mode: "client=secure, server=old",
+  nip7_fallback_pfp: "default pic if no nostr profile"
+};
+fetch("/config.json").then(r=>r.json()).then(cfg=>{
+  let html = "";
+  for(let k in cfg){
+    let isOn = cfg[k] === true;
+    let cls = isOn ? "on" : "off";
+    let name = k.toUpperCase().replace(/_/g, "_");
+    let desc = descs[k] || "";
+    html += "<div class='toggle "+cls+"' onclick=\"toggle('"+k+"')\">ONFF "+name+": "+desc+"</div>";
+  }
+  document.getElementById("cfg").innerHTML = html;
+});
+function toggle(key){
+  fetch("/config/"+key+"/toggle",{method:"POST"}).then(()=>location.reload());
+}
+</script>
+</body>
+</html>
